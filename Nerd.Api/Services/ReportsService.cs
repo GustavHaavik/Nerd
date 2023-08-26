@@ -24,4 +24,19 @@ public class ReportsService : IReportsService
         person.Location = location;
         return location;
     }
+
+    public int GetPercentageSurvivors()
+    {
+        int total = _people.Count;
+        if (total == 0) return 0; // Avoid division by zero
+
+        int survivors = _people.Values.Count(p => p.IsAlive);
+
+        return (int)Math.Round((double)survivors / total * 100);
+    }
+
+    public List<Person> GetSurvivors()
+    {
+        return _people.Values.Where(p => p.IsAlive).ToList();
+    }
 }

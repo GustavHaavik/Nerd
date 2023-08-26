@@ -2,7 +2,7 @@ POST http://localhost:5185/reports/create
 Content-Type: application/json
 
 {
-    "FirstName": "Arne",
+    "FirstName": "Dennis",
     "LastName": "Jensen",
     "Age": 25,
     "Gender": "Male",

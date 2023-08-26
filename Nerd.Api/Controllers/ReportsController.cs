@@ -32,16 +32,7 @@ public class ReportsController : ControllerBase
 
         _reportsService.CreatePerson(person);
 
-        // Kunne bruge en mapper til a Mappe fra Person til PersonResponse
-        var response = new PersonResponse(
-                    person.Id,
-                    person.FirstName,
-                    person.LastName,
-                    person.Gender,
-                    person.Age,
-                    person.IsAlive,
-                    person.Location
-                ); ;
+        var response = GetPersonResponse(person);
 
         return Ok(response);
     }
@@ -61,5 +52,42 @@ public class ReportsController : ControllerBase
         var response = _reportsService.UpdateLocation(id, new GeoLocation(request.Latitude, request.Longitude));
 
         return Ok(response);
+    }
+
+    [HttpGet("percentage")]
+    public IActionResult GetPercentageSurvivors()
+    {
+        var percentage = _reportsService.GetPercentageSurvivors();
+        var response = new SurvivorPercentageResponse(percentage);
+
+        return Ok(response);
+    }
+
+    [HttpGet("survivors")]
+    public IActionResult GetSurvivors()
+    {
+        List<Person> survivors = _reportsService.GetSurvivors();
+
+        var people = new List<PersonResponse>();
+        people.AddRange(survivors.Select(GetPersonResponse));
+
+        var total = _reportsService.GetPercentageSurvivors();
+
+        var response = new SurvivorsResponse(total, survivors);
+
+        return Ok(response);
+    }
+
+    private PersonResponse GetPersonResponse(Person person)
+    {
+        return new PersonResponse(
+                    person.Id,
+                    person.FirstName,
+                    person.LastName,
+                    person.Gender,
+                    person.Age,
+                    person.IsAlive,
+                    person.Location
+                );
     }
 }
