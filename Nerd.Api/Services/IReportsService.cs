@@ -6,5 +6,7 @@ namespace Nerd.Api.Services
     public interface IReportsService
     {
         void CreatePerson(Person person);
+        Person? GetPerson(Guid id);
+        GeoLocation UpdateLocation(Guid id, GeoLocation location);
     }
 }

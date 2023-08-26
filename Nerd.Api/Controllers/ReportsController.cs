@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Nerd.Api.Contracts;
+using Nerd.Api.Contracts.Requests;
+using Nerd.Api.Contracts.Responses;
 using Nerd.Api.Models;
 using Nerd.Api.Services;
 
@@ -41,6 +42,23 @@ public class ReportsController : ControllerBase
                     person.IsAlive,
                     person.Location
                 ); ;
+
+        return Ok(response);
+    }
+
+    [HttpPut("update/{id}")]
+    public IActionResult UpdateLocation(Guid id, UpdateLocationRequest request)
+    {
+        var existingPerson = _reportsService.GetPerson(id);
+        if (existingPerson is null)
+            return BadRequest(new ErrorResponse($"Person with id {id} not found."));
+
+        var location = new GeoLocation(request.Latitude, request.Longitude);
+
+        if (existingPerson.Location.Hemisphere != location.Hemisphere)
+            return BadRequest(new ErrorResponse("Cannot change hemisphere."));
+
+        var response = _reportsService.UpdateLocation(id, new GeoLocation(request.Latitude, request.Longitude));
 
         return Ok(response);
     }

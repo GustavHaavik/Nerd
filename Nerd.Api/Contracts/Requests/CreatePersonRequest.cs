@@ -1,6 +1,6 @@
 using Nerd.Api.Models;
 
-namespace Nerd.Api.Contracts
+namespace Nerd.Api.Contracts.Responses
 {
     public record CreatePersonRequest(
         string FirstName,
