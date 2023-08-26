@@ -3,10 +3,10 @@ Content-Type: application/json
 
 {
     "FirstName": "Dennis",
-    "LastName": "Jensen",
+    "LastName": "Bjarne",
     "Age": 25,
     "Gender": "Male",
-    "IsAlive": false,
+    "IsAlive": true,
     "Location": {
         "Latitude": 55.676098,
         "Longitude": 12.568337

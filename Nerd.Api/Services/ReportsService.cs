@@ -39,4 +39,9 @@ public class ReportsService : IReportsService
     {
         return _people.Values.Where(p => p.IsAlive).ToList();
     }
+
+    public List<Person> FindByLastName(string lastName)
+    {
+        return _people.Values.Where(p => p.LastName == lastName).ToList();
+    }
 }

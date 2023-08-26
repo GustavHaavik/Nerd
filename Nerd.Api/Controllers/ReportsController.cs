@@ -78,6 +78,28 @@ public class ReportsController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet("search")]
+    public IActionResult FindByLastName(string lastName)
+    {
+        List<Person> people = _reportsService.FindByLastName(lastName);
+
+
+        // if (people is null)
+        //     return BadRequest(new ErrorResponse($"No people found with last name {lastName}."));
+
+        var response = new List<PersonResponse>();
+
+        // foreach (var person in people)
+        // {
+        //     response.Add(GetPersonResponse(person));
+        // }
+
+        response.AddRange(people.Select(GetPersonResponse));
+
+        return Ok(response);
+    }
+
+
     private PersonResponse GetPersonResponse(Person person)
     {
         return new PersonResponse(

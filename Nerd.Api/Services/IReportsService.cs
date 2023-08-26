@@ -10,5 +10,6 @@ namespace Nerd.Api.Services
         GeoLocation UpdateLocation(Guid id, GeoLocation location);
         int GetPercentageSurvivors();
         List<Person> GetSurvivors();
+        List<Person> FindByLastName(string lastName);
     }
 }
